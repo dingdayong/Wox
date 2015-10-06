@@ -44,7 +44,19 @@ namespace Wox.Plugin.Program
                 Action = (e) =>
                 {
                     context.API.HideApp();
-                    context.API.ShellRun(c.ExecutePath);
+                    if (e.SpecialKeyState.WinPressed)
+                    {
+                        // WIN + ENTER
+                        // Open the folder with this file
+                        string path = Path.GetDirectoryName(c.ExecutePath); 
+                        context.API.ShellRun(path);
+                    }
+                    else
+                    {
+                        // ENTER
+                        context.API.ShellRun(c.ExecutePath);
+                    }
+
                     return true;
                 }
             }).ToList();
